@@ -11,13 +11,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   posts.forEach(post => {
     const div = document.createElement("div");
-    div.className = "post-preview";
+    div.className = "journal-post-card";
     div.innerHTML = `
-      <h2>${post.title}</h2>
-      <p>${post.excerpt}</p>
-      ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
-      <small>Published on ${new Date(post.publishedAt).toLocaleDateString()}</small>
+      <a href="/post.html?slug=${post.slug.current}">
+        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
+        <h2>${post.title}</h2>
+        <p>${post.excerpt}</p>
+        <p class="date">${new Date(post.publishedAt).toLocaleDateString()}</p>
+      </a>
     `;
     container.appendChild(div);
   });
 });
+
