@@ -1,4 +1,4 @@
-import { client } from '../sanity.js';
+import { client } from './sanity.js';
 
 function getSlugFromURL() {
   const params = new URLSearchParams(window.location.search);
