@@ -1,33 +1,23 @@
 import { fetchJournalPosts } from './getPosts.js';
 
-const container = document.getElementById('journal-posts');
+document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.getElementById("journal-posts");
+  const posts = await fetchJournalPosts();
 
-async function loadPosts() {
-  try {
-    const posts = await fetchJournalPosts();
-
-    if (posts.length === 0) {
-      container.innerHTML = '<p>No journal posts found yet.</p>';
-      return;
-    }
-
-    posts.forEach(post => {
-      const postElement = document.createElement('div');
-      postElement.classList.add('journal-post');
-
-      postElement.innerHTML = `
-        <h2>${post.title}</h2>
-        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
-        <p>${post.excerpt}</p>
-        <p><em>${new Date(post.publishedAt).toLocaleDateString()}</em></p>
-      `;
-
-      container.appendChild(postElement);
-    });
-  } catch (err) {
-    console.error('Error loading posts:', err);
-    container.innerHTML = '<p>Failed to load journal posts.</p>';
+  if (!posts.length) {
+    container.innerHTML = "<p>No posts found.</p>";
+    return;
   }
-}
 
-loadPosts();
+  posts.forEach(post => {
+    const div = document.createElement("div");
+    div.className = "post-preview";
+    div.innerHTML = `
+      <h2>${post.title}</h2>
+      <p>${post.excerpt}</p>
+      ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
+      <small>Published on ${new Date(post.publishedAt).toLocaleDateString()}</small>
+    `;
+    container.appendChild(div);
+  });
+});
