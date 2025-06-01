@@ -13,19 +13,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     const div = document.createElement("div");
     div.className = "journal-post-card";
     div.innerHTML = `
-      <a href="/post.html?slug=${post.slug.current}">
-        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
-        <h2>${post.title}</h2>
-        <p>${post.excerpt}</p>
-        <p class="date">
-          ${post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long';
-            day: 'numeric'
-          }): 'Date not set'}
-        </p>
-      </a>
-    `;
+  <a href="/journal/${post.slug.current}.html">
+    ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
+    <h2>${post.title}</h2>
+    <p>${post.excerpt}</p>
+    <p class="date">${
+      post.publishedAt
+        ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        : "Date not set"
+    }</p>
+  </a>
+`;
+
     container.appendChild(div);
   });
 });
