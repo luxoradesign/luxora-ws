@@ -8,52 +8,61 @@
 <body>
   <div id="post-content">Loading...</div>
 
-  <script type="module">
-    import { client } from '../sanity.js';
+  <script>
+     async function fetchPost(slug) {
+        const query = encodeURIComponent(`*[_type == "journalPost" && slug.current == "${slug}"][0]{
+            title,
+            publishedAt,
+            body,
+            "imageUrl": mainImage.asset->url
+        }`);
 
-    async function getSlugFromURL() {
-      const segments = window.location.pathname.split('/');
-      const slugWithHtml = segments[segments.length - 1];
-      return slugWithHtml.replace('.html', '');
-    }
+        const url = 'https://fbog0kgj.api.sanity.io/v2021-10-21/data/query/production?query=${query}';
 
-    async function fetchPost(slug) {
-      const query = `*[_type == "journalPost" && slug.current == $slug][0]{
-        title,
-        publishedAt,
-        body,
-        "imageUrl": mainImage.asset->url
-      }`;
-      return await client.fetch(query, { slug });
-    }
+        const response = await fetch(url);
+        const result = await response.json();
+        return result.result;
+     }
 
-    async function renderPost() {
-      const slug = await getSlugFromURL();
-      const post = await fetchPost(slug);
-      const container = document.getElementById("post-content");
+     function getSlugFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('slug');
+     }
 
-      if (!post) {
-        container.innerHTML = "<p>Post not found.</p>";
-        return;
-      }
+     function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+     }
 
-      container.innerHTML = `
-        <h1>${post.title}</h1>
-        <p class="date">${
-          post.publishedAt
-            ? new Date(post.publishedAt).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })
-            : "Date not set"
-        }</p>
-        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
-        <div>${post.body}</div>
-      `;
-    }
+     async function renderPost() {
+        const slug = getSlugFromURL();
+        const container = document.getElementById("post-content");
 
-    renderPost();
+        if (!slug) {
+            container.innerHTML = "<p>Error: No slug found in URL.</p>";
+            return;
+        }
+
+        const post = await fetchPost(slug);
+
+        if (!post) {
+            container.innerHTML = '<p>No post found for slug: "${slug}".</p>';
+            return;
+        }
+
+        container.innerHTML =
+            <h1>${post.title}</h1>
+            <p class="date">${post.publishedAt ? formatDate(post.publishedAt) : "No date"}</p>
+            ${post.imageUrl ? '<img src=${post.imageUrl}" alt="${post.title}" />' : ""}
+            <div class="post-body">${post.body}</div>
+        ';
+     }
+
+     document.addEventListener("DOMContentLoaded", renderPost);
   </script>
 </body>
 </html>
