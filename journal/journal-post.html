@@ -1,71 +1,76 @@
-<script>
-  async function fetchPost(slug) {
-    const query = encodeURIComponent(`*[_type == "journalPost" && slug.current == "${slug}"][0]{
-      title,
-      publishedAt,
-      body,
-      "imageUrl": mainImage.asset->url
-    }`);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Journal Post</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="journal-post-wrapper">
+    <div id="post-content">
+      <p>Loading...</p>
+    </div>
+  </main>
 
-    const url = `https://fbog0kgj.api.sanity.io/v2021-10-21/data/query/production?query=${query}`;
+  <script type="module">
+    async function fetchPost(slug) {
+      const query = encodeURIComponent(`*[_type == "journalPost" && slug.current == "${slug}"][0]{
+        title,
+        publishedAt,
+        body,
+        "imageUrl": mainImage.asset->url
+      }`);
+      const url = `https://fbog0kgj.api.sanity.io/v2021-10-21/data/query/production?query=${query}`;
 
-    try {
-      const response = await fetch(url);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const result = await response.json();
+        if (!result.result) throw new Error("Post not found.");
+        return result.result;
+      } catch (err) {
+        const container = document.getElementById("post-content");
+        container.innerHTML = `<p style="color:red;">Failed to load: ${err.message}</p>`;
+        console.error("Fetch error:", err);
       }
+    }
 
-      const result = await response.json();
+    function getSlugFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('slug');
+    }
 
-      // Check if valid Sanity API response
-      if (!result || !result.result) {
-        throw new Error("Invalid response structure");
-      }
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return isNaN(date) ? "Invalid Date" : date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    }
 
-      return result.result;
-
-    } catch (err) {
-      console.error("Fetch error:", err);
+    async function renderPost() {
+      const slug = getSlugFromURL();
       const container = document.getElementById("post-content");
-      container.innerHTML = `<p>Oops! Failed to load post: ${err.message}</p>`;
-    }
-  }
+      if (!slug) {
+        container.innerHTML = "<p>Error: No slug found in URL.</p>";
+        return;
+      }
 
-  function getSlugFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('slug');
-  }
+      const post = await fetchPost(slug);
+      if (!post) return;
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return isNaN(date) ? "Invalid Date" : date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    });
-  }
-
-  async function renderPost() {
-    const slug = getSlugFromURL();
-    const container = document.getElementById("post-content");
-
-    if (!slug) {
-      container.innerHTML = "<p>Error: No slug found in URL.</p>";
-      return;
+      container.innerHTML = `
+        <h1>${post.title}</h1>
+        <p class="date">${post.publishedAt ? formatDate(post.publishedAt) : "No date"}</p>
+        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ""}
+        <div class="post-body">${post.body || "<em>No body content available.</em>"}</div>
+      `;
     }
 
-    const post = await fetchPost(slug);
-
-    if (!post) return;
-
-    container.innerHTML = `
-      <h1>${post.title}</h1>
-      <p class="date">${post.publishedAt ? formatDate(post.publishedAt) : "No date"}</p>
-      ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ""}
-      <div class="post-body">${post.body}</div>
-    `;
-  }
-
-  document.addEventListener("DOMContentLoaded", renderPost);
-</script>
+    document.addEventListener("DOMContentLoaded", renderPost);
+  </script>
+</body>
+</html>
