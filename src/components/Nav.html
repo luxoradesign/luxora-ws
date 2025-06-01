@@ -1,0 +1,23 @@
+<!-- src/components/Nav.html -->
+<nav class="fixed top-0 left-0 w-full z-50 bg-luxCream/80 backdrop-blur-sm border-b border-luxBlack/10">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+    <a href="/" class="text-2xl font-serif tracking-wide text-luxBlack">Luxora</a>
+
+    <button id="navToggle" class="md:hidden text-luxBlack text-xl">&#9776;</button>
+
+    <ul id="navMenu" class="hidden md:flex space-x-8 text-luxBlack text-sm font-sans uppercase tracking-wider">
+      <li><a href="/" class="hover:underline">Home</a></li>
+      <li><a href="/journal.html" class="hover:underline">Journal</a></li>
+      <li><a href="/projects.html" class="hover:underline">Projects</a></li>
+      <li><a href="/about.html" class="hover:underline">About</a></li>
+    </ul>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="md:hidden hidden flex-col px-6 pb-4 space-y-3 bg-luxCream text-luxBlack">
+    <a href="/" class="text-sm uppercase">Home</a>
+    <a href="/journal.html" class="text-sm uppercase">Journal</a>
+    <a href="/projects.html" class="text-sm uppercase">Projects</a>
+    <a href="/about.html" class="text-sm uppercase">About</a>
+  </div>
+</nav>
