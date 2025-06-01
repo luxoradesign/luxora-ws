@@ -17,7 +17,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
         <h2>${post.title}</h2>
         <p>${post.excerpt}</p>
-        <p class="date">${new Date(post.publishedAt).toLocaleDateString()}</p>
+        <p class="date">
+          ${post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long';
+            day: 'numeric'
+          }): 'Date not set'}
+        </p>
       </a>
     `;
     container.appendChild(div);
