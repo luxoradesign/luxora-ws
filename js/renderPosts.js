@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const div = document.createElement("div");
     div.className = "journal-post-card";
     div.innerHTML = `
-  <a href="/journal/${post.slug.current}.html">
+  <a href="/journal/journal-post.html?slug=${post.slug.current}">
     ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
     <h2>${post.title}</h2>
     <p>${post.excerpt}</p>

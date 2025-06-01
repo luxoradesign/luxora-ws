@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Blog Post</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="post-content">Loading...</div>
+
+  <script type="module">
+    import { client } from '../sanity.js';
+
+    async function getSlugFromURL() {
+      const segments = window.location.pathname.split('/');
+      const slugWithHtml = segments[segments.length - 1];
+      return slugWithHtml.replace('.html', '');
+    }
+
+    async function fetchPost(slug) {
+      const query = `*[_type == "journalPost" && slug.current == $slug][0]{
+        title,
+        publishedAt,
+        body,
+        "imageUrl": mainImage.asset->url
+      }`;
+      return await client.fetch(query, { slug });
+    }
+
+    async function renderPost() {
+      const slug = await getSlugFromURL();
+      const post = await fetchPost(slug);
+      const container = document.getElementById("post-content");
+
+      if (!post) {
+        container.innerHTML = "<p>Post not found.</p>";
+        return;
+      }
+
+      container.innerHTML = `
+        <h1>${post.title}</h1>
+        <p class="date">${
+          post.publishedAt
+            ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            : "Date not set"
+        }</p>
+        ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ''}
+        <div>${post.body}</div>
+      `;
+    }
+
+    renderPost();
+  </script>
+</body>
+</html>
