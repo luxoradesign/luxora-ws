@@ -64,10 +64,31 @@
 
       container.innerHTML = `
         <h1>${post.title}</h1>
-        <p class="date">${post.publishedAt ? formatDate(post.publishedAt) : "No date"}</p>
+        <p class="date">${post.publishedAt ? formatDate(post.publishedAt) : "<em>No date available</em>"}</p>
         ${post.imageUrl ? `<img src="${post.imageUrl}" alt="${post.title}" />` : ""}
-        <div class="post-body">${post.body || "<em>No body content available.</em>"}</div>
+        <div id="post-body" class="post-body"></div>
       `;
+
+      // Render Portable Text manually (basic version)
+      const bodyContainer = document.getElementById("post-body");
+
+      if (post.body && Array.isArray(post.body)) {
+        post.body.forEach(block => {
+            if (block._type === 'block' && block.children) {
+                const p = document.createElement('p');
+                block.children.forEach(child => {
+                    if (child.text) {
+                        const span = document.createElement('span');
+                        span.textContent = child.text;
+                        p.appendChild(span);
+                    }
+                });
+                bodyContainer.appendChild(p);
+            }
+        });
+      } else {
+        bodyContainer.innerHTML = "<em>No content available</em>";
+      }
     }
 
     document.addEventListener("DOMContentLoaded", renderPost);
