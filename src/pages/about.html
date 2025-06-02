@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>About – Luxora Design House</title>
+    <link rel="stylesheet" href="/src/styles/globals.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.css"
+    />
+  </head>
+
+  <body class="bg-luxCream text-luxBlack font-sans">
+    <!-- Nav -->
+    <div id="nav"></div>
+
+    <main class="pt-32 px-6 max-w-5xl mx-auto">
+      <!-- Studio Philosophy -->
+      <section class="mb-20 text-center">
+        <h1 class="text-5xl font-display mb-4">About Luxora</h1>
+        <p class="max-w-2xl mx-auto text-lg text-luxBlack/70">
+          Luxora Design House Ltd. blends timeless architectural elegance with soulful, purpose-driven interiors.
+          Every space we touch is a story — carefully composed to honor both beauty and intention.
+        </p>
+      </section>
+
+      <!-- Studio Ethos -->
+      <section class="grid md:grid-cols-2 gap-12 items-center mb-24">
+        <img src="/public/images/studio.jpg" alt="Studio" class="rounded shadow-md" />
+        <div>
+          <h2 class="text-3xl font-serif mb-4">Our Ethos</h2>
+          <p class="text-base leading-relaxed text-luxBlack/80">
+            We believe design should be deeply personal and profoundly functional. Our work is rooted in contextual
+            understanding, material richness, and timeless form. From curated residences to boutique commercial
+            projects, we craft environments that endure — visually and emotionally.
+          </p>
+        </div>
+      </section>
+
+      <!-- Team Members -->
+      <section class="text-center">
+        <h2 class="text-3xl font-serif mb-4">Meet the Team</h2>
+        <div class="flex flex-wrap justify-center gap-12 mt-12">
+          <div class="w-64">
+            <img src="/public/images/acacia.jpg" class="rounded-full mb-4 aspect-square object-cover shadow" alt="Acacia Mahon" />
+            <h3 class="text-xl font-serif">Acacia Mahon</h3>
+            <p class="text-sm text-luxBlack/60">Co-Founder & Creative Director</p>
+          </div>
+          <div class="w-64">
+            <img src="/public/images/shawn.jpg" class="rounded-full mb-4 aspect-square object-cover shadow" alt="Shawn Mahon" />
+            <h3 class="text-xl font-serif">Shawn Mahon</h3>
+            <p class="text-sm text-luxBlack/60">Co-Founder & Director of Technical Operations</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Scripts -->
+    <script type="module">
+      import '/src/components/nav.js'
+      import '/src/components/about.js'
+    </script>
+  </body>
+</html>
