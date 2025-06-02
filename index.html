@@ -2,8 +2,8 @@
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Luxora Design House</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,67 +22,77 @@
     />
   </head>
 
-  <body class="font-sans text-luxBlack bg-luxCream">
+  <body class="bg-luxCream text-luxBlack font-sans">
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-luxCream/80 backdrop-blur-sm border-b border-luxBlack/10">
+      <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        <a href="/" class="text-2xl font-serif tracking-wide text-luxBlack">Luxora</a>
+        <button id="navToggle" class="md:hidden text-luxBlack text-xl">&#9776;</button>
+        <ul
+          id="navMenu"
+          class="hidden md:flex space-x-8 text-luxBlack text-sm font-sans uppercase tracking-wider"
+        >
+          <li><a href="/index.html" class="hover:underline">Home</a></li>
+          <li><a href="/pages/journal.html" class="hover:underline">Journal</a></li>
+          <li><a href="/projects.html" class="hover:underline">Projects</a></li>
+          <li><a href="/pages/about.html" class="hover:underline">About</a></li>
+        </ul>
+      </div>
+      <div id="mobileMenu" class="md:hidden hidden flex-col px-6 pb-4 space-y-3 bg-luxCream text-luxBlack">
+        <a href="/index.html" class="text-sm uppercase">Home</a>
+        <a href="/pages/journal.html" class="text-sm uppercase">Journal</a>
+        <a href="/projects.html" class="text-sm uppercase">Projects</a>
+        <a href="/pages/about.html" class="text-sm uppercase">About</a>
+      </div>
+    </nav>
 
-    <!-- ⬇️ Components Injected Here -->
-    <div id="app">
-      <!-- ✅ Nav -->
-      <nav class="fixed top-0 left-0 w-full z-50 bg-luxCream/80 backdrop-blur-sm border-b border-luxBlack/10">
-        <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <a href="/" class="text-2xl font-serif tracking-wide text-luxBlack">Luxora</a>
-          <button id="navToggle" class="md:hidden text-luxBlack text-xl">&#9776;</button>
-          <ul id="navMenu" class="hidden md:flex space-x-8 text-luxBlack text-sm font-sans uppercase tracking-wider">
-            <li><a href="/" class="hover:underline">Home</a></li>
-            <li><a href="/journal.html" class="hover:underline">Journal</a></li>
-            <li><a href="/projects.html" class="hover:underline">Projects</a></li>
-            <li><a href="/about.html" class="hover:underline">About</a></li>
-          </ul>
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex items-center justify-center text-center bg-luxCream pt-32 px-6">
+      <div>
+        <h1 class="text-5xl md:text-7xl font-display text-luxBlack leading-tight mb-4">
+          Timeless Design<br />
+          <span class="text-luxGold">Intentional Living</span>
+        </h1>
+        <p class="max-w-xl mx-auto text-lg text-luxBlack/70">
+          Bespoke interiors and architectural harmony, crafted with soul.
+        </p>
+        <div class="mt-8 flex justify-center space-x-6 text-sm uppercase tracking-wide font-sans">
+          <a href="/projects.html" class="hover:underline">View Projects</a>
+          <a href="/pages/journal.html" class="hover:underline">Journal</a>
+          <a href="/pages/about.html" class="hover:underline">About Us</a>
         </div>
-        <div id="mobileMenu" class="md:hidden hidden flex-col px-6 pb-4 space-y-3 bg-luxCream text-luxBlack">
-          <a href="/" class="text-sm uppercase">Home</a>
-          <a href="/journal.html" class="text-sm uppercase">Journal</a>
-          <a href="/projects.html" class="text-sm uppercase">Projects</a>
-          <a href="/about.html" class="text-sm uppercase">About</a>
-        </div>
-      </nav>
+      </div>
+    </section>
 
-      <!-- ✅ Hero -->
-      <section id="hero" class="min-h-screen flex items-center justify-center text-center bg-luxCream pt-32">
-        <div class="px-6">
-          <h1 class="text-5xl md:text-7xl font-display text-luxBlack leading-tight">
-            Timeless Design<br />
-            <span class="text-luxGold">Intentional Living</span>
-          </h1>
-          <p class="mt-6 max-w-xl mx-auto text-lg text-luxBlack/70 font-sans">
-            Luxora Design House blends architectural elegance with soulful interiors — a curated experience of beauty and purpose.
-          </p>
-        </div>
-      </section>
+    <!-- Gallery -->
+    <section id="gallery" class="bg-white px-6 py-20">
+      <h2 class="text-4xl font-serif text-center mb-12">Curated Projects</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <a data-fancybox="gallery" href="https://source.unsplash.com/featured/?interior,1">
+          <img src="https://source.unsplash.com/600x800/?interior,1" alt="Project 1" class="rounded hover:opacity-90 transition" />
+        </a>
+        <a data-fancybox="gallery" href="https://source.unsplash.com/featured/?interior,2">
+          <img src="https://source.unsplash.com/600x800/?interior,2" alt="Project 2" class="rounded hover:opacity-90 transition" />
+        </a>
+        <a data-fancybox="gallery" href="https://source.unsplash.com/featured/?architecture,3">
+          <img src="https://source.unsplash.com/600x800/?architecture,3" alt="Project 3" class="rounded hover:opacity-90 transition" />
+        </a>
+      </div>
+    </section>
 
-      <!-- ✅ Gallery -->
-      <section id="gallery" class="bg-white px-6 py-16">
-        <h2 class="text-4xl font-serif text-center mb-12">Curated Projects</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          <a data-fancybox="gallery" href="/public/images/project1.jpg">
-            <img src="/public/images/project1_thumb.jpg" alt="Project 1" class="rounded hover:opacity-90 transition" />
-          </a>
-          <a data-fancybox="gallery" href="/public/images/project2.jpg">
-            <img src="/public/images/project2_thumb.jpg" alt="Project 2" class="rounded hover:opacity-90 transition" />
-          </a>
-          <a data-fancybox="gallery" href="/public/images/project3.jpg">
-            <img src="/public/images/project3_thumb.jpg" alt="Project 3" class="rounded hover:opacity-90 transition" />
-          </a>
-        </div>
-      </section>
-    </div>
+    <!-- Journal Preview -->
+    <section id="journal" class="bg-luxCream px-6 py-20">
+      <h2 class="text-4xl font-serif text-center mb-12">From the Journal</h2>
+      <div id="journal-posts" class="grid gap-12 md:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
 
-    <!-- ✅ JS Scripts -->
+    <!-- Scripts -->
     <script type="module">
       import '/src/components/nav.js'
       import '/src/components/gallery.js'
+      import '/src/components/journal.js'
     </script>
 
-    <!-- Fancybox -->
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5/dist/fancybox/fancybox.umd.js"></script>
   </body>
 </html>
